@@ -1,0 +1,10 @@
+[Unit]
+Description=A simple OpenVPN supervisor utility to watch for stale connections.
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python /opt/openvpn_supervisor.py
+
+[Install]
+WantedBy=multi-user.target
