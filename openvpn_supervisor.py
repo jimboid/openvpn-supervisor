@@ -36,7 +36,8 @@ def loggingsetup():
     logger = logging.getLogger("openvpn-supervisor")
     logger.setLevel(logging.INFO)
 
-    logpath = os.path.join(os.getcwd(), "openvpn-supervisor.log")
+    logpath = os.path.join(
+        "/var/log/openvpn-supervisor", "openvpn-supervisor.log")
 
     logformat = logging.Formatter(
         '%(asctime)s - %(message)s', '%Y-%m-%d %H:%M:%S')
@@ -107,14 +108,18 @@ def main():
 
             status = openvpnservicerestart()
 
-            if status[2] > 0:
+            if status[2] == 0:
+
+                logger.info("OpenVPN has been successfully restarted.")
+
+            else:
 
                 notdone = False
 
-                logger.error("OpenVPN could not be restarted, here is the "
-                             "output of stdout, stderr and the errorcode:"
-                             "\n\nstdout:\n{0}\n\nstderr:{1}\n\nerrcode = {2}"
-                             .format(status[0], status[1], status[2]))
+                logger.info("ERROR - OpenVPN could not be restarted, here is "
+                            "the output of stdout, stderr and the errorcode:"
+                            "\n\nstdout:\n{0}\n\nstderr:{1}\n\nerrcode = {2}"
+                            .format(status[0], status[1], status[2]))
 
                 logger.info("If the error message is to do with 'permissions' "
                             "or 'access denied' then you need to make sure "
@@ -122,8 +127,8 @@ def main():
 
         time.sleep(120)
 
-    logging.info("Exiting the OpenVPN Supervisor.")
-    logging.info("Goodbye for now!")
+    logger.info("Exiting the OpenVPN Supervisor.")
+    logger.info("Goodbye for now!")
 
 if __name__ == "__main__":
 
