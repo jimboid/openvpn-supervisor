@@ -95,6 +95,11 @@ def main():
     logger.info("This software utility was developed by James Gebbie-Rayet "
                 "and is made available under the MIT license terms.")
 
+    time.sleep(300)
+
+    logger.info("Monitoring started - logs will appear at "
+                "/var/log/openvpn-supervisor/log")
+
     while notdone:
 
         # Ping out
