@@ -83,16 +83,18 @@ def sendtoshell(cmd):
 def main():
     """Blah"""
 
+    notdone = True
+
     logger = loggingsetup()
 
     logger.info("Starting the OpenVPN Supervisor.")
-    logger.info("This software is designed to monitor the status of an "
-                "OpenVPN connection and restart the OpenVPN service when "
-                "connections go stale.")
+    logger.info("This simple software utility is designed to monitor the "
+                "status of an OpenVPN connection and restart the OpenVPN "
+                "service when the connection becomes stale.")
     logger.info("This software utility was developed by James Gebbie-Rayet "
                 "and is made available under the MIT license terms.")
 
-    while True:
+    while notdone:
 
         # Ping out
         status = sendtoshell("ping -c 1 -w2 www.google.com")
@@ -107,10 +109,16 @@ def main():
 
             if status[2] > 0:
 
+                notdone = False
+
                 logger.error("OpenVPN could not be restarted, here is the "
                              "output of stdout, stderr and the errorcode:"
                              "\n\nstdout:\n{0}\n\nstderr:{1}\n\nerrcode = {2}"
                              .format(status[0], status[1], status[2]))
+
+                logger.info("If the error message is to do with 'permissions' "
+                            "or 'access denied' then you need to make sure "
+                            "that this utility is running as root.")
 
         time.sleep(120)
 
