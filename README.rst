@@ -14,6 +14,10 @@ connects to a server locale from your chosen VPN provider. It should
 also be set to connect after reboot. Once you have this done do the following.
 
 You should then set up a VPN killswitch using one of the Linux based firewalls.
+This allows the supervisor tool to run pings down the vpn connection, upon loss
+of connection the killswitch will prevent outside access allowing the tool to
+issue a restart to the VPN client.
+
 An example of doing this with ufw on ubuntu 18 can be found below, your mileage
 may vary based on the flavour of Linux you have, but you should be able to find
 a guide somewhere:
