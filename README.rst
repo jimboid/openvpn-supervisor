@@ -25,12 +25,15 @@ Install ufw
 Set default to deny all incoming and outgoing
 
     sudo ufw default deny incoming
+    
     sudo ufw default deny outgoing
 
 Allow ssh, DNS and OpenVPN
 
     sudo ufw allow 22 comment ssh
+    
     sudo ufw allow out 53 comment DNS
+    
     sudo ufw allow out 1198 comment OpenVPN
 
 Allow all traffic over VPN (you'll need to find your VPN tunnel interface, mine
@@ -64,7 +67,9 @@ Move the systemd file into one of the system directories.
 Reload the daemon and start the openvpn-supervisor
 
     sudo systemctl daemon-reload
+    
     sudo systemctl enable openvpn-supervisor.service
+    
     sudo systemctl start openvpn-supervisor.service
     
 and that should be it. You should find that the openvpn supervisor is logging to
